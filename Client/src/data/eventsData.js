@@ -104,7 +104,8 @@ export const eventsData = [
         prize: '₹5,000 + Gimbal Stabilizer',
         date: 'March 18, 2026',
         time: 'Deadline: March 18, 06:00 PM',
-        venue: 'Submission via Google Form'
+        venue: 'Submission via Google Form',
+        isTeamEvent: true
     },
     {
         id: 'e-football',
@@ -125,7 +126,8 @@ export const eventsData = [
         prize: '₹10,000 + Gaming Headset',
         date: 'March 18, 2026',
         time: '10:00 AM Onwards',
-        venue: 'Esports Arena (Student Lounge)'
+        venue: 'Esports Arena (Student Lounge)',
+        bookedSeats: 16
     },
     {
         id: 'mini-militia',
@@ -146,7 +148,6 @@ export const eventsData = [
         prize: '₹8,000 + Google Play Gift Cards',
         date: 'March 18, 2026',
         time: '01:00 PM Onwards',
-        venue: 'Esports Arena (Student Lounge)',
-        isTeamEvent: true
+        venue: 'Esports Arena (Student Lounge)'
     }
 ];

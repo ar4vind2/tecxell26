@@ -13,15 +13,15 @@ const LoadingScreen = ({ onComplete }) => {
                     clearInterval(interval);
                     return 100;
                 }
-                return prev + Math.floor(Math.random() * 15) + 5;
+                return prev + Math.floor(Math.random() * 20) + 30; // Faster increment
             });
-        }, 300);
+        }, 100);
 
         if (progress >= 100) {
             setIsFinishing(true);
             const finalDelay = setTimeout(() => {
                 onComplete();
-            }, 800);
+            }, 300);
             return () => clearTimeout(finalDelay);
         }
 

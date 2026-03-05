@@ -9,6 +9,16 @@
     font-family: var(--font-body);
 }
 
+.mobile-rotate-warning {
+    display: none;
+    font-family: var(--font-heading);
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px dashed var(--arcade-red);
+    background: rgba(255, 0, 60, 0.1);
+}
+
 .border-blue {
     border-color: var(--arcade-blue) !important;
 }
@@ -175,6 +185,34 @@
 .table-wrapper {
     flex-grow: 1;
     overflow-y: auto;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    position: relative;
+    padding-bottom: 20px;
+}
+
+.scroll-down-btn {
+    position: absolute;
+    bottom: 20px;
+    right: 30px;
+    background: var(--arcade-blue);
+    color: #000;
+    border: 2px solid #fff;
+    padding: 10px 15px;
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    cursor: pointer;
+    z-index: 100;
+    border-radius: 5px;
+    box-shadow: 2px 2px 0 #fff;
+    transition: all 0.2s;
+    opacity: 0.8;
+}
+
+.scroll-down-btn:hover {
+    transform: translateY(2px);
+    box-shadow: none;
+    opacity: 1;
 }
 
 .pixel-table {
@@ -294,6 +332,8 @@
 @media (max-width: 1024px) {
     .admin-dashboard-page {
         flex-direction: column;
+        padding: 15px;
+        height: auto;
     }
 
     .admin-sidebar {
@@ -321,5 +361,67 @@
     .admin-nav-item.logout {
         margin-top: 0;
         margin-left: auto;
+    }
+
+    .admin-content-area {
+        height: auto;
+        min-height: 500px;
+        overflow: visible;
+    }
+}
+
+@media (max-width: 768px) {
+    .admin-sidebar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .admin-profile {
+        border-right: none;
+        border-bottom: 2px dashed #333;
+        padding-right: 0;
+        margin-right: 0;
+        padding-bottom: 15px;
+        margin-bottom: 15px;
+    }
+
+    .admin-nav {
+        flex-direction: column;
+        overflow-x: visible;
+    }
+
+    .admin-nav-item.logout {
+        margin-top: 15px;
+        margin-left: 0;
+        text-align: left;
+    }
+
+    .admin-content-area {
+        padding: 15px;
+        height: auto;
+        min-height: 500px;
+    }
+
+    .mobile-rotate-warning {
+        display: block;
+    }
+
+    .tab-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .search-input {
+        min-width: 100%;
+    }
+
+    .pixel-table {
+        font-size: 1rem;
+    }
+
+    .pixel-table th,
+    .pixel-table td {
+        padding: 10px;
+        white-space: nowrap;
     }
 }

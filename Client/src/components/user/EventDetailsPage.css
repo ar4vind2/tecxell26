@@ -179,6 +179,48 @@
     margin-bottom: 8px;
 }
 
+.progress-box {
+    background: rgba(20, 20, 20, 0.9);
+    padding: 20px;
+    margin-top: 5px;
+}
+
+.progress-title {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    color: var(--arcade-yellow);
+    margin-bottom: 15px;
+}
+
+.progress-stats {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-family: var(--font-body);
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.seats-total {
+    color: #888;
+}
+
+.progress-bar-container {
+    height: 15px;
+    width: 100%;
+    background-color: #222;
+    border: 2px solid #555;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background-color: var(--arcade-yellow);
+    box-shadow: 0 0 10px var(--arcade-yellow);
+    transition: width 1s ease-in-out;
+}
+
 .register-btn-large {
     background: #000;
     color: #fff;

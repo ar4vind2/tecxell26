@@ -3,13 +3,13 @@ import { Routes, Route } from 'react-router-dom';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import './App.css';
-import Home from './pages/Home';
-import ContactPage from './pages/ContactPage';
-import EventDetailsPage from './pages/EventDetailsPage';
-import AdminLoginPage from './pages/AdminLoginPage';
-import AdminDashboard from './pages/AdminDashboard';
-import ScrollToTop from './components/ScrollToTop';
-import LoadingScreen from './components/LoadingScreen';
+import Home from './components/Home';
+import ContactPage from './components/user/ContactPage';
+import EventDetailsPage from './components/user/EventDetailsPage';
+import AdminLoginPage from './components/admin/AdminLoginPage';
+import AdminDashboard from './components/admin/AdminDashboard';
+import ScrollToTop from './components/user/ScrollToTop';
+import LoadingScreen from './components/user/LoadingScreen';
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);

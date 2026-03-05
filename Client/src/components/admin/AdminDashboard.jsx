@@ -1,11 +1,21 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { eventsData } from '../data/eventsData';
+import { eventsData } from '../../data/eventsData';
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState('data'); // 'data' or 'timer'
+    const tableContainerRef = useRef(null);
+
+    const scrollToBottom = () => {
+        if (tableContainerRef.current) {
+            tableContainerRef.current.scrollTo({
+                top: tableContainerRef.current.scrollHeight,
+                behavior: 'smooth'
+            });
+        }
+    };
 
     // Mock registration data for the "Viewing Data" functionality
     const [registrations, setRegistrations] = useState([
@@ -74,6 +84,9 @@ const AdminDashboard = () => {
             </div>
 
             <div className="admin-content-area pixel-border">
+                <div className="mobile-rotate-warning blink-text text-arcade-red">
+                    ⚠ ROTATE DEVICE FOR OPTIMAL VIEWING ⚠
+                </div>
                 {activeTab === 'data' && (
                     <div className="view-container">
                         <div className="tab-header">
@@ -89,7 +102,10 @@ const AdminDashboard = () => {
                                 />
                             </div>
                         </div>
-                        <div className="table-wrapper">
+                        <div className="table-wrapper" ref={tableContainerRef}>
+                            <button className="scroll-down-btn blink-text-subtle" onClick={scrollToBottom}>
+                                ▼ SCROLL DOWN
+                            </button>
                             <table className="pixel-table">
                                 <thead>
                                     <tr>
@@ -123,7 +139,10 @@ const AdminDashboard = () => {
                 {activeTab === 'timer' && (
                     <div className="view-container">
                         <h2 className="tab-title text-arcade-yellow">MISSION TIMELINE STATUS</h2>
-                        <div className="table-wrapper">
+                        <div className="table-wrapper" ref={tableContainerRef}>
+                            <button className="scroll-down-btn blink-text-subtle" onClick={scrollToBottom}>
+                                ▼ SCROLL DOWN
+                            </button>
                             <table className="pixel-table">
                                 <thead>
                                     <tr>

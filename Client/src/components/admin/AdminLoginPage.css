@@ -140,3 +140,31 @@
     color: #555;
     font-size: 1rem;
 }
+
+@media (max-width: 480px) {
+    .admin-login-container {
+        padding: 20px;
+    }
+
+    .admin-header h1 {
+        font-size: 1.2rem;
+        word-break: break-all;
+    }
+
+    .admin-subtitle,
+    .admin-input {
+        font-size: 0.9rem;
+    }
+
+    .admin-submit-btn {
+        font-size: 0.85rem;
+        padding: 12px;
+        white-space: normal;
+        word-wrap: break-word;
+    }
+
+    .admin-error-box {
+        font-size: 0.8rem;
+        padding: 10px;
+    }
+}

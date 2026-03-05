@@ -1,12 +1,20 @@
 import React, { useState } from 'react';
 import './RegistrationModal.css';
 
-const RegistrationModal = ({ eventTitle, eventColor, isTeamEvent, onClose, onSubmit }) => {
+const RegistrationModal = ({ eventId, eventTitle, eventColor, isTeamEvent, onClose, onSubmit }) => {
+    const getInitialSquadSize = () => {
+        if (eventId === 'treasure-hunt') return '4';
+        return '1';
+    };
+
     const [formData, setFormData] = useState({
         playerName: '',
+        teamLeaderName: '',
         playerEmail: '',
         playerPhone: '',
-        squadSize: '1',
+        collegeName: '',
+        course: '',
+        squadSize: getInitialSquadSize(),
         player2Name: '',
         player3Name: '',
         player4Name: '',
@@ -15,27 +23,79 @@ const RegistrationModal = ({ eventTitle, eventColor, isTeamEvent, onClose, onSub
 
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
+    const [errorMsg, setErrorMsg] = useState('');
+
+    const isEFootball = eventId === 'e-football';
+    const isReelMaking = eventId === 'reel-making';
+    const isTreasureHunt = eventId === 'treasure-hunt';
+    const isVibeCoding = eventId === 'vibe-coding';
+
+    const renderSquadSizeOptions = () => {
+        if (isTreasureHunt) {
+            return <option value="4">SQUAD (4 REQUIRED)</option>;
+        }
+        if (isVibeCoding) {
+            return (
+                <>
+                    <option value="1">SOLO (1)</option>
+                    <option value="2">DUO (2)</option>
+                </>
+            );
+        }
+        if (isReelMaking) {
+            return (
+                <>
+                    <option value="1">SOLO (1)</option>
+                    <option value="2">DUO (2)</option>
+                    <option value="3">TRIO (3)</option>
+                </>
+            );
+        }
+        return (
+            <>
+                <option value="1">SOLO (1)</option>
+                <option value="2">DUO (2)</option>
+                <option value="3">TRIO (3)</option>
+                <option value="4">SQUAD (4)</option>
+            </>
+        );
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
+        if (errorMsg) setErrorMsg('');
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        const courseLower = formData.course.toLowerCase().trim();
+        const collegeLower = formData.collegeName.toLowerCase().trim();
+
+        // Course validation (No btech/mtech variations)
+        if (/(b\s*\.?\s*tech|m\s*\.?\s*tech)/i.test(courseLower)) {
+            setErrorMsg('ACCESS DENIED: B.Tech and M.Tech students are not permitted.');
+            return;
+        }
+
+        // College validation (No MITS variations)
+        if (/(muthoot institute of technology and science|\bmits\b)/i.test(collegeLower)) {
+            setErrorMsg('ACCESS DENIED: Participants from MITS are not permitted.');
+            return;
+        }
+
+        setErrorMsg('');
         setIsSubmitting(true);
 
-        // Simulate network request (AJAX/Fetch)
         setTimeout(() => {
             setIsSubmitting(false);
             setIsSuccess(true);
-
-            // Wait a moment then inform parent
             setTimeout(() => {
                 onSubmit(formData);
                 onClose();
-            }, 2000);
-        }, 1500);
+            }, 800);
+        }, 400);
     };
 
     return (
@@ -47,6 +107,12 @@ const RegistrationModal = ({ eventTitle, eventColor, isTeamEvent, onClose, onSub
                     JOIN: {eventTitle}
                 </h2>
 
+                {errorMsg && (
+                    <div className="error-message blink-text" style={{ color: 'var(--arcade-red)', marginBottom: '15px', textAlign: 'center', fontFamily: 'var(--font-heading)' }}>
+                        {errorMsg}
+                    </div>
+                )}
+
                 {isSuccess ? (
                     <div className="success-message blink-text text-arcade-green">
                         <p>TRANSMISSION RECEIVED.</p>
@@ -55,17 +121,32 @@ const RegistrationModal = ({ eventTitle, eventColor, isTeamEvent, onClose, onSub
                 ) : (
                     <form onSubmit={handleSubmit} className="retro-form">
                         <div className="form-group">
-                            <label>PLAYER NAME</label>
+                            <label>{isReelMaking ? 'TEAM NAME' : 'PLAYER NAME'}</label>
                             <input
                                 type="text"
                                 name="playerName"
                                 className="pixel-input"
-                                placeholder="ENTER ALIAS..."
+                                placeholder={isReelMaking ? 'ENTER TEAM NAME...' : 'ENTER ALIAS...'}
                                 value={formData.playerName}
                                 onChange={handleChange}
                                 required
                             />
                         </div>
+
+                        {isReelMaking && (
+                            <div className="form-group">
+                                <label>TEAM LEADER NAME</label>
+                                <input
+                                    type="text"
+                                    name="teamLeaderName"
+                                    className="pixel-input"
+                                    placeholder="ENTER LEADER ALIAS..."
+                                    value={formData.teamLeaderName}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+                        )}
 
                         <div className="form-group">
                             <label>COMM-LINK (EMAIL)</label>
@@ -93,6 +174,32 @@ const RegistrationModal = ({ eventTitle, eventColor, isTeamEvent, onClose, onSub
                             />
                         </div>
 
+                        <div className="form-group">
+                            <label>COLLEGE NAME</label>
+                            <input
+                                type="text"
+                                name="collegeName"
+                                className="pixel-input"
+                                placeholder="ENTER COLLEGE NAME..."
+                                value={formData.collegeName}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label>COURSE / DEGREE</label>
+                            <input
+                                type="text"
+                                name="course"
+                                className="pixel-input"
+                                placeholder="ENTER COURSE..."
+                                value={formData.course}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+
                         {isTeamEvent && (
                             <div className="form-group">
                                 <label>SQUAD SIZE</label>
@@ -102,15 +209,12 @@ const RegistrationModal = ({ eventTitle, eventColor, isTeamEvent, onClose, onSub
                                     value={formData.squadSize}
                                     onChange={handleChange}
                                 >
-                                    <option value="1">SOLO (1)</option>
-                                    <option value="2">DUO (2)</option>
-                                    <option value="3">TRIO (3)</option>
-                                    <option value="4">SQUAD (4)</option>
+                                    {renderSquadSizeOptions()}
                                 </select>
                             </div>
                         )}
 
-                        {isTeamEvent && parseInt(formData.squadSize) >= 2 && (
+                        {isTeamEvent && parseInt(formData.squadSize) >= 2 && !isReelMaking && (
                             <div className="form-group">
                                 <label>PLAYER 2 NAME</label>
                                 <input
@@ -125,9 +229,24 @@ const RegistrationModal = ({ eventTitle, eventColor, isTeamEvent, onClose, onSub
                             </div>
                         )}
 
+                        {isTeamEvent && isReelMaking && parseInt(formData.squadSize) >= 2 && (
+                            <div className="form-group">
+                                <label>MEMBER 2 NAME</label>
+                                <input
+                                    type="text"
+                                    name="player2Name"
+                                    className="pixel-input"
+                                    placeholder="ENTER 2ND ALIAS..."
+                                    value={formData.player2Name}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+                        )}
+
                         {isTeamEvent && parseInt(formData.squadSize) >= 3 && (
                             <div className="form-group">
-                                <label>PLAYER 3 NAME</label>
+                                <label>{isReelMaking ? 'MEMBER 3 NAME' : 'PLAYER 3 NAME'}</label>
                                 <input
                                     type="text"
                                     name="player3Name"
@@ -158,7 +277,6 @@ const RegistrationModal = ({ eventTitle, eventColor, isTeamEvent, onClose, onSub
                         <div className="payment-section">
                             <h3 className="payment-title">PAYMENT VERIFICATION</h3>
                             <div className="qr-container">
-                                {/* Using a placeholder pixel art or QR code lookalike */}
                                 <img
                                     src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=techfest@upi&pn=Tecxell2026&cu=INR"
                                     alt="Payment QR Code"

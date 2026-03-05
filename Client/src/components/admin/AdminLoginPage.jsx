@@ -35,7 +35,7 @@ const AdminLoginPage = () => {
                 setIsLoggingIn(false);
                 setError('ACCESS DENIED: INVALID CREDENTIALS');
             }
-        }, 1200);
+        }, 400);
     };
 
     return (

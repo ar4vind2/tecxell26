@@ -1,4 +1,5 @@
 import './Hero.css';
+import Countdown from './Countdown';
 
 const Hero = () => {
     return (
@@ -11,6 +12,8 @@ const Hero = () => {
                     <p className="techfest-date blink-text mt-4">
                         MAR 18 • 2026 | INSERT COIN TO PLAY
                     </p>
+
+                    <Countdown targetDate="2026-03-18T00:00:00" />
 
                     <div className="cta-wrapper mt-5">
                         <a href="#events" className="pixel-btn btn-style-red pixel-text-shadow">START ADVENTURE</a>

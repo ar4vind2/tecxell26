@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { eventsData } from '../data/eventsData';
-import RegistrationModal from '../components/RegistrationModal';
-import '../components/Events.css';
+import { eventsData } from '../../data/eventsData';
+import RegistrationModal from './RegistrationModal';
+import './Events.css';
 import './EventDetailsPage.css';
 
 const EventDetailsPage = () => {
@@ -86,17 +86,35 @@ const EventDetailsPage = () => {
                         </ul>
                     </div>
 
+                    {event.id === 'e-football' && (
+                        <div className="progress-box pixel-border card-yellow">
+                            <h4 className="progress-title">SEAT AVAILABILITY</h4>
+                            <div className="progress-stats">
+                                <span className="seats-remaining blink-text text-arcade-yellow">
+                                    {event.bookedSeats >= 32 ? 'LOBBY FULL' : `${32 - event.bookedSeats} SEATS REMAINING`}
+                                </span>
+                                <span className="seats-total">{event.bookedSeats} / 32 BOOKED</span>
+                            </div>
+                            <div className="progress-bar-container">
+                                <div className="progress-bar-fill" style={{ width: `${(event.bookedSeats / 32) * 100}%` }}></div>
+                            </div>
+                        </div>
+                    )}
+
                     <button
                         className={`register-btn-large btn-style-${event.color} blink-text-subtle`}
                         onClick={() => setIsModalOpen(true)}
+                        disabled={event.id === 'e-football' && event.bookedSeats >= 32}
+                        style={{ opacity: event.id === 'e-football' && event.bookedSeats >= 32 ? 0.5 : 1, cursor: event.id === 'e-football' && event.bookedSeats >= 32 ? 'not-allowed' : 'pointer' }}
                     >
-                        INITIATE REGISTRATION
+                        {event.id === 'e-football' && event.bookedSeats >= 32 ? 'LOBBY FULL' : 'INITIATE REGISTRATION'}
                     </button>
                 </div>
             </div>
 
             {isModalOpen && (
                 <RegistrationModal
+                    eventId={event.id}
                     eventTitle={event.title}
                     eventColor={event.color}
                     isTeamEvent={event.isTeamEvent}

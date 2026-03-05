@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { eventsData } from '../data/eventsData';
+import { eventsData } from '../../data/eventsData';
 import './Events.css';
 
 const Events = () => {
