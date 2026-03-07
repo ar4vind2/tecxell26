@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AdminLoginPage.css';
+import api from '../../utils/axios';
 
 const AdminLoginPage = () => {
     const [credentials, setCredentials] = useState({
-        username: '',
         password: ''
     });
     const [error, setError] = useState('');
@@ -19,23 +19,24 @@ const AdminLoginPage = () => {
         setError(''); // Clear error when user types
     };
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
         setIsLoggingIn(true);
         setError('');
 
-        // Fake authentication logic for demonstration
-        setTimeout(() => {
-            if (credentials.username === 'admin' && credentials.password === 'tecxell26') {
-                // Successful login
-                setIsLoggingIn(false);
-                navigate('/admin/dashboard');
-            } else {
-                // Failed login
-                setIsLoggingIn(false);
-                setError('ACCESS DENIED: INVALID CREDENTIALS');
-            }
-        }, 400);
+        try {
+            console.log(credentials);
+            const response = await api.post('/adminLogin', credentials);
+
+            const { msg, token } = response.data;
+            console.log(token);
+            localStorage.setItem('token', token);
+            setIsLoggingIn(false);
+            navigate('/admin/dashboard');
+        } catch (error) {
+            setIsLoggingIn(false);
+            setError('ACCESS DENIED: INVALID PASSCODE');
+        }
     };
 
     return (
@@ -55,20 +56,6 @@ const AdminLoginPage = () => {
                     )}
 
                     <div className="admin-form-group">
-                        <label>OPERATOR ID</label>
-                        <input
-                            type="text"
-                            name="username"
-                            className="admin-input"
-                            placeholder="ENTER USERNAME"
-                            value={credentials.username}
-                            onChange={handleChange}
-                            required
-                            autoFocus
-                        />
-                    </div>
-
-                    <div className="admin-form-group">
                         <label>SECURITY PASSCODE</label>
                         <input
                             type="password"
@@ -78,6 +65,7 @@ const AdminLoginPage = () => {
                             value={credentials.password}
                             onChange={handleChange}
                             required
+                            autoFocus
                         />
                     </div>
 
@@ -90,8 +78,16 @@ const AdminLoginPage = () => {
                     </button>
                 </form>
 
-                <div className="admin-footer">
-                    UNAUTHORIZED ACCESS WILL BE LOGGED
+                <div className="admin-footer" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+                    <span>UNAUTHORIZED ACCESS WILL BE LOGGED</span>
+                    <button
+                        type="button"
+                        onClick={() => navigate('/')}
+                        className="pixel-btn-text text-arcade-yellow mt-2"
+                        style={{ background: 'none', border: 'none', textDecoration: 'underline', cursor: 'pointer', fontSize: '10px' }}
+                    >
+                        [&lt;  RETURN TO BASE ]
+                    </button>
                 </div>
             </div>
         </div>

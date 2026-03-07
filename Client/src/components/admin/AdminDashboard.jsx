@@ -9,7 +9,10 @@ const AdminDashboard = () => {
     const [activeTab, setActiveTab] = useState('data'); // 'data' or 'timer'
 
     const handleLogout = () => {
+        console.log('User logging out...');
+        localStorage.removeItem('token');
         navigate('/admin');
+        alert('Logged out successfully!');
     };
 
     return (
