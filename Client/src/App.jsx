@@ -11,6 +11,8 @@ import AdminDashboard from './components/admin/AdminDashboard';
 import ScrollToTop from './components/user/ScrollToTop';
 import LoadingScreen from './components/user/LoadingScreen';
 
+import TicketPage from './components/user/TicketPage';
+
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -40,6 +42,7 @@ const App = () => {
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/admin" element={<AdminLoginPage />} />
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
+            <Route path="/ticket/:id" element={<TicketPage />} />
           </Routes>
         </div>
       )}

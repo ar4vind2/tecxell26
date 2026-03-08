@@ -125,3 +125,26 @@ export const eventRegistration = async (req, res) => {
         res.status(500).json({ error: 'Server error during event registration' });
     }
 };
+
+// details of a single registration for the ticket page, also includes event details for the frontend to display on the ticket page
+export const getRegistration = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const registrationInfo = await Registration.findById(id);
+
+        if (!registrationInfo) {
+            return res.status(404).json({ error: 'Registration not found' });
+        }
+
+        const eventInfo = await Event.findOne({ name: registrationInfo.eventName });
+
+        res.status(200).json({
+            registration: registrationInfo,
+            event: eventInfo // Pass the event document down to the frontend
+        });
+    } catch (error) {
+        console.error('Get Registration error:', error);
+        res.status(500).json({ error: 'Server error fetching registration' });
+    }
+};
+

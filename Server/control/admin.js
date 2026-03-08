@@ -2,6 +2,7 @@ import Admin from "../model/admin.js";
 import Event from "../model/events.js";
 import Registration from "../model/registration.js";
 import jwt from "jsonwebtoken";
+import nodemailer from "nodemailer";
 
 export const adminLogin = async (req, res) => {
     try {
@@ -81,6 +82,53 @@ export const getRegistrations = async (req, res) => {
     } catch (error) {
         console.error('Error fetching registrations:', error);
         res.status(500).json({ error: 'Server error while fetching registrations' });
+    }
+};
+
+export const verifyPayment = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        // Find and update the registration status
+        const updatedRegistration = await Registration.findByIdAndUpdate(
+            id,
+            { verified: "Verified", feeSts: 'Paid' }, // Assuming you track payment status here
+            { new: true }
+        );
+
+        if (!updatedRegistration) {
+            return res.status(404).json({ error: 'Registration not found' });
+        }
+
+        // Setup nodemailer transporter using existing credentials
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.EMAIL_USER_1,
+                pass: process.env.EMAIL_PASS_1
+            }
+        });
+
+        // Current domain logic (hardcoding local dev for now, but dynamic would be better)
+        const frontendUrl = process.env.FRONTEND_URL; // Change to production URL later
+        const ticketUrl = `${frontendUrl}/ticket/${updatedRegistration._id}`;
+
+        const userMessage = `Dear ${updatedRegistration.playerName},\n\nWe are thrilled to let you know that your payment has been verified!\n\nYour Ticket is Confirmed for ${updatedRegistration.eventName}.\n\nAccess and download your digital Retro-Pass from the link below:\n${ticketUrl}\n\nWe can't wait to see you there,\nTeam TecXell 2026`;
+
+        const userMailOptions = {
+            from: process.env.EMAIL_USER_1,
+            to: updatedRegistration.email,
+            subject: `Your Ticket is Confirmed for ${updatedRegistration.eventName} - See You There!`,
+            text: userMessage
+        };
+
+        await transporter.sendMail(userMailOptions);
+
+        res.status(200).json({ msg: 'Payment verified and ticket emailed successfully.', registration: updatedRegistration });
+
+    } catch (error) {
+        console.error('Verify Payment error:', error);
+        res.status(500).json({ error: 'Server error during payment verification' });
     }
 };
 
