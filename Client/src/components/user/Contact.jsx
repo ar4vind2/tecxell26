@@ -9,7 +9,7 @@ const Contact = () => {
 
         // Construct email body with generic line breaks
         const subject = encodeURIComponent(`Tecxell '26 Query from ${name}`);
-        const body = encodeURIComponent(`Player Name: ${name}\nPlayer Email: ${email}\n\nMessage:\n${message}`);
+        const body = encodeURIComponent(`Player Name: ${name}\n\nMessage:\n${message}`);
 
         // Create a temporary <a> tag and click it to bypass popup blockers
         const mailtoLink = `mailto:computex@mgits.ac.in?subject=${subject}&body=${body}`;
