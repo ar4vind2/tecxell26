@@ -52,8 +52,10 @@
 }
 
 .ticket-id {
-    font-size: 1rem;
+    font-size: 1.6rem;
     opacity: 0.9;
+    font-weight: bold;
+    letter-spacing: 2px;
 }
 
 .ticket-body {

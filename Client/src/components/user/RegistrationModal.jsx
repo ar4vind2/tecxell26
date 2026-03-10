@@ -148,10 +148,7 @@ const RegistrationModal = ({ eventId, eventTitle, eventColor, isTeamEvent, onClo
 
             setIsSubmitting(false);
             setIsSuccess(true);
-            setTimeout(() => {
-                onSubmit(payload);
-                onClose();
-            }, 1000);
+            onSubmit(payload);
         } catch (error) {
             console.error('Registration failed:', error);
             setIsSubmitting(false);

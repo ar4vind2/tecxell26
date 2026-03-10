@@ -72,13 +72,14 @@ const AdminCommsLog = () => {
             return;
         }
 
-        const headers = ["Sl No", "Event Name", "Player Names", "Team Name", "Phone", "Email", "College", "Branch", "Transaction ID", "Squad Size", "Fee Status", "Verified Status", "Date Registered"];
+        const headers = ["Sl No", "Ticket ID", "Event Name", "Player Names", "Team Name", "Phone", "Email", "College", "Branch", "Transaction ID", "Squad Size", "Fee Status", "Verified Status", "Date Registered"];
 
         const csvRows = [headers.join(',')];
 
         filteredRegistrations.forEach((reg, idx) => {
             const row = [
                 idx + 1,
+                `"#${(reg._id || '').slice(-4).toUpperCase()}"`,
                 `"${reg.eventName || ''}"`,
                 `"${Array.isArray(reg.playerName) ? reg.playerName.join(' | ') : (reg.playerName || '')}"`,
                 `"${reg.teamName || ''}"`,

@@ -68,13 +68,13 @@ const Contact = () => {
                         <div className="coordinator-list mt-3">
                             <div className="coordinator">
                                 <span className="coord-name">NEBIN KURIAKOSE</span>
-                                <span className="coord-role text-arcade-cyan">LEAD COORDINATOR</span>
+                                <span className="coord-role text-arcade-pink">LEAD COORDINATOR</span>
                                 <a href="tel:+919876543210" className="coord-phone">+91 9207513904</a>
                             </div>
                             <div className="coordinator">
-                                <span className="coord-name">WILL UPDATE</span>
-                                <span className="coord-role text-arcade-pink">OPERATIONS</span>
-                                <a href="tel:+919876543211" className="coord-phone">+91 ***********</a>
+                                <span className="coord-name">VIJEESH V</span>
+                                <span className="coord-role text-arcade-pink">LEAD COORDINATOR</span>
+                                <a href="tel:+919061316079" className="coord-phone">+91 9061316079</a>
                             </div>
                         </div>
                     </div>

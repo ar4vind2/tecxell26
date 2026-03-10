@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Malayalam:wght@400;700;900&display=swap');
+
 .events-section {
     padding: 100px 20px;
 }
@@ -13,6 +15,14 @@
     text-transform: uppercase;
     font-family: var(--font-heading);
     text-shadow: 4px 4px 0 var(--arcade-red);
+}
+
+.malayalam-heading {
+    font-family: 'Noto Sans Malayalam', sans-serif;
+    font-size: 5rem;
+    font-weight: 900;
+    text-transform: none;
+    letter-spacing: 4px;
 }
 
 .events-grid {
@@ -77,12 +87,23 @@
 .card-header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-bottom: 20px;
     font-family: var(--font-heading);
     font-size: 0.8rem;
     color: #fff;
     border-bottom: 4px dotted #444;
     padding-bottom: 10px;
+}
+
+.event-status-badge {
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    border: 1px solid;
+    padding: 2px 7px;
+    white-space: nowrap;
 }
 
 .points-label {

@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { eventsData } from '../../data/eventsData';
 import RegistrationModal from './RegistrationModal';
+import api from '../../utils/axios';
 import './Events.css';
 import './EventDetailsPage.css';
 
@@ -11,6 +12,21 @@ const EventDetailsPage = () => {
 
     // State to control Modal visibility
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [eFootballSeats, setEFootballSeats] = useState(0);
+    const [miniMilitiaSeats, setMiniMilitiaSeats] = useState(0);
+
+    useEffect(() => {
+        if (event?.id === 'e-football') {
+            api.get('/eFootballCount')
+                .then(res => setEFootballSeats(res.data.count))
+                .catch(() => setEFootballSeats(0));
+        }
+        if (event?.id === 'mini-militia') {
+            api.get('/miniMilitiaCount')
+                .then(res => setMiniMilitiaSeats(res.data.count))
+                .catch(() => setMiniMilitiaSeats(0));
+        }
+    }, [event?.id]);
 
     if (!event) {
         return (
@@ -29,13 +45,27 @@ const EventDetailsPage = () => {
             </Link>
 
             <div className="event-header">
-                <h1 className="pixel-text-shadow event-title-main">{event.title}</h1>
+                <div className="event-title-group">
+                    <h1 className="pixel-text-shadow event-title-main">{event.title}</h1>
+                    {event.theme && (
+                        <span className={`event-theme-label text-arcade-${event.color}`}>
+                            ▶ {event.theme}
+                        </span>
+                    )}
+                </div>
+                {/* Desktop: show image */}
                 <img
                     src={event.icon}
                     alt={event.title}
-                    className="event-icon-large text-shadow-glow"
+                    className="event-icon-large text-shadow-glow event-icon-desktop"
                     style={{ width: '120px', height: '120px', objectFit: 'contain' }}
                 />
+                {/* Mobile: show theme badge instead of image */}
+                {event.theme && (
+                    <div className={`event-theme-badge pixel-border card-${event.color} event-icon-mobile`}>
+                        <span className={`theme-badge-text text-arcade-${event.color}`}>{event.theme}</span>
+                    </div>
+                )}
             </div>
 
             <div className="event-content-grid">
@@ -56,7 +86,7 @@ const EventDetailsPage = () => {
                         </ul>
                     </div>
 
-                    {event.judging && (
+                    {event.judging && event.judging.length > 0 && (
                         <div className="rules-section" style={{ marginTop: '40px' }}>
                             <h3 className="section-subtitle">JUDGING CRITERIA</h3>
                             <ul className="rules-list">
@@ -101,6 +131,7 @@ const EventDetailsPage = () => {
                     <div className="logistics-box">
                         <p><strong>DATE:</strong> {event.date}</p>
                         <p><strong>TIME:</strong> {event.time}</p>
+                        <p><strong>VENUE:</strong> {event.venue}</p>
                     </div>
 
                     <div className="coordinators-box">
@@ -117,12 +148,27 @@ const EventDetailsPage = () => {
                             <h4 className="progress-title">SEAT AVAILABILITY</h4>
                             <div className="progress-stats">
                                 <span className="seats-remaining blink-text text-arcade-yellow">
-                                    {event.bookedSeats >= 32 ? 'LOBBY FULL' : `${32 - event.bookedSeats} SEATS REMAINING`}
+                                    {eFootballSeats >= 32 ? 'LOBBY FULL' : `${32 - eFootballSeats} SEATS REMAINING`}
                                 </span>
-                                <span className="seats-total">{event.bookedSeats} / 32 BOOKED</span>
+                                <span className="seats-total">{eFootballSeats} / 32 BOOKED</span>
                             </div>
                             <div className="progress-bar-container">
-                                <div className="progress-bar-fill" style={{ width: `${(event.bookedSeats / 32) * 100}%` }}></div>
+                                <div className="progress-bar-fill" style={{ width: `${(eFootballSeats / 32) * 100}%` }}></div>
+                            </div>
+                        </div>
+                    )}
+
+                    {event.id === 'mini-militia' && (
+                        <div className="progress-box pixel-border card-pink">
+                            <h4 className="progress-title">SEAT AVAILABILITY</h4>
+                            <div className="progress-stats">
+                                <span className="seats-remaining blink-text text-arcade-pink">
+                                    {miniMilitiaSeats >= 40 ? 'LOBBY FULL' : `${40 - miniMilitiaSeats} SEATS REMAINING`}
+                                </span>
+                                <span className="seats-total">{miniMilitiaSeats} / 40 BOOKED</span>
+                            </div>
+                            <div className="progress-bar-container">
+                                <div className="progress-bar-fill" style={{ width: `${(miniMilitiaSeats / 40) * 100}%` }}></div>
                             </div>
                         </div>
                     )}
@@ -130,10 +176,13 @@ const EventDetailsPage = () => {
                     <button
                         className={`register-btn-large btn-style-${event.color} blink-text-subtle`}
                         onClick={() => setIsModalOpen(true)}
-                        disabled={event.id === 'e-football' && event.bookedSeats >= 32}
-                        style={{ opacity: event.id === 'e-football' && event.bookedSeats >= 32 ? 0.5 : 1, cursor: event.id === 'e-football' && event.bookedSeats >= 32 ? 'not-allowed' : 'pointer' }}
+                        disabled={(event.id === 'e-football' && eFootballSeats >= 32) || (event.id === 'mini-militia' && miniMilitiaSeats >= 40)}
+                        style={{
+                            opacity: (event.id === 'e-football' && eFootballSeats >= 32) || (event.id === 'mini-militia' && miniMilitiaSeats >= 40) ? 0.5 : 1,
+                            cursor: (event.id === 'e-football' && eFootballSeats >= 32) || (event.id === 'mini-militia' && miniMilitiaSeats >= 40) ? 'not-allowed' : 'pointer'
+                        }}
                     >
-                        {event.id === 'e-football' && event.bookedSeats >= 32 ? 'LOBBY FULL' : 'INITIATE REGISTRATION'}
+                        {(event.id === 'e-football' && eFootballSeats >= 32) || (event.id === 'mini-militia' && miniMilitiaSeats >= 40) ? 'LOBBY FULL' : 'INITIATE REGISTRATION'}
                     </button>
                 </div>
             </div>

@@ -27,6 +27,13 @@ export const registration = async (req, res) => {
             }
         }
 
+        if (eventName === 'Mini Militia') {
+            const miniMilitiaCount = await Registration.countDocuments({ eventName: 'Mini Militia' });
+            if (miniMilitiaCount >= 40) {
+                return res.status(400).json({ error: 'Mini Militia registrations are full (limit: 40)' });
+            }
+        }
+
         const newRegistration = new Registration({
             eventName,
             playerName,
@@ -183,3 +190,32 @@ export const getRegistration = async (req, res) => {
     }
 };
 
+export const getEFootballCount = async (req, res) => {
+    try {
+        const count = await Registration.countDocuments({ eventName: 'E-football' });
+        res.status(200).json({ count });
+    } catch (error) {
+        console.error('E-Football count error:', error);
+        res.status(500).json({ error: 'Server error fetching E-Football count' });
+    }
+};
+
+export const getMiniMilitiaCount = async (req, res) => {
+    try {
+        const count = await Registration.countDocuments({ eventName: 'Mini Militia' });
+        res.status(200).json({ count });
+    } catch (error) {
+        console.error('Mini Militia count error:', error);
+        res.status(500).json({ error: 'Server error fetching Mini Militia count' });
+    }
+};
+
+export const getPublicEventsStatus = async (req, res) => {
+    try {
+        const events = await Event.find({}, 'name currentSts');
+        res.status(200).json({ events });
+    } catch (error) {
+        console.error('Public events status error:', error);
+        res.status(500).json({ error: 'Server error fetching events status' });
+    }
+};

@@ -17,6 +17,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  user-select: none;
 }
 
 html {
@@ -173,5 +174,15 @@ a {
 
   .pixel-text-shadow-blue {
     text-shadow: 2px 2px 0px var(--arcade-blue);
+  }
+
+  .container {
+    padding: 0 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 10px;
   }
 }

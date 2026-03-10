@@ -15,9 +15,8 @@ const Footer = () => {
                     <ul className="footer-links">
                         <li><Link to="/" className="hover-blink">1. HOME_SYS</Link></li>
                         <li><a href="#events" className="hover-blink">2. STAGES</a></li>
-                        <li><a href="#sponsors" className="hover-blink">3. SPONSORS</a></li>
-                        <li><Link to="/contact" className="hover-blink">4. COMM-LINK</Link></li>
-                        <li><Link to="/admin" className="hover-blink text-arcade-red" style={{ marginTop: '15px', display: 'inline-block' }}>5. [ ADMIN_LOGIN ]</Link></li>
+                        <li><Link to="/contact" className="hover-blink">3. COMM-LINK</Link></li>
+                        <li><Link to="/admin" className="hover-blink text-arcade-red" style={{ marginTop: '15px', display: 'inline-block' }}>4. [ ADMIN_LOGIN ]</Link></li>
                     </ul>
                 </div>
             </div>

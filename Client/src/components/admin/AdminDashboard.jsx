@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AdminCommsLog from './AdminCommsLog';
 import AdminMissionControl from './AdminMissionControl';
+import AdminWinners from './AdminWinners';
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {
@@ -36,6 +37,12 @@ const AdminDashboard = () => {
                     >
                         &gt; MISSION CONTROL (EVENTS)
                     </button>
+                    <button
+                        className={`admin-nav-item ${activeTab === 'winners' ? 'active' : ''}`}
+                        onClick={() => setActiveTab('winners')}
+                    >
+                        &gt; WINNERS BOARD
+                    </button>
                     <button className="admin-nav-item logout" onClick={handleLogout}>
                         [ LOGOUT ]
                     </button>
@@ -48,6 +55,7 @@ const AdminDashboard = () => {
                 </div>
                 {activeTab === 'data' && <AdminCommsLog />}
                 {activeTab === 'timer' && <AdminMissionControl />}
+                {activeTab === 'winners' && <AdminWinners />}
             </div>
         </div>
     );

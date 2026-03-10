@@ -28,6 +28,42 @@
     flex-wrap: wrap;
 }
 
+.event-title-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+}
+
+.event-theme-label {
+    font-family: var(--font-body);
+    font-size: 1.6rem;
+    letter-spacing: 3px;
+    opacity: 0.85;
+}
+
+/* Desktop: show image, hide badge */
+.event-icon-desktop {
+    display: block;
+}
+
+.event-icon-mobile {
+    display: none;
+}
+
+.event-theme-badge {
+    padding: 14px 20px;
+    text-align: center;
+    min-width: 160px;
+}
+
+.theme-badge-text {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    letter-spacing: 2px;
+    line-height: 1.6;
+}
+
 .event-title-main {
     font-size: 4rem;
     color: #fff;
@@ -70,7 +106,7 @@
 .info-box h3,
 .section-subtitle {
     font-family: var(--font-heading);
-    font-size: 1rem;
+    font-size: 1.1rem;
     color: #fff;
     margin-bottom: 20px;
     border-bottom: 2px dashed #444;
@@ -78,8 +114,8 @@
 }
 
 .full-description {
-    font-size: 1.4rem;
-    line-height: 1.6;
+    font-size: 1.6rem;
+    line-height: 1.7;
     color: #ddd;
 }
 
@@ -89,13 +125,13 @@
 }
 
 .rules-list li {
-    font-size: 1.3rem;
+    font-size: 1.45rem;
     color: #e0e0e0;
     margin-bottom: 18px;
     display: flex;
     align-items: flex-start;
     gap: 15px;
-    line-height: 1.6;
+    line-height: 1.7;
 }
 
 .bullet-point {
@@ -147,7 +183,7 @@
 }
 
 .logistics-box p {
-    font-size: 1.35rem;
+    font-size: 1.5rem;
     margin-bottom: 18px;
     color: #e0e0e0;
 }
@@ -173,7 +209,7 @@
 .coordinators-box ul {
     list-style: square inside;
     color: #e0e0e0;
-    font-size: 1.25rem;
+    font-size: 1.4rem;
     padding-left: 10px;
 }
 
@@ -337,30 +373,7 @@
 
 @media (max-width: 768px) {
     .event-title-main {
-        font-size: 2.5rem;
-    }
-
-    .event-icon-large {
-        font-size: 3.5rem;
-    }
-
-    .full-description {
-        font-size: 1.2rem;
-    }
-
-    .rules-list li {
-        font-size: 1.1rem;
-    }
-
-    .register-btn-large {
-        font-size: 1rem;
-        padding: 15px;
-    }
-}
-
-@media (max-width: 480px) {
-    .event-details-page {
-        padding-top: 80px;
+        font-size: 2.2rem;
     }
 
     .event-header {
@@ -370,28 +383,146 @@
         margin-bottom: 30px;
     }
 
-    .event-title-main {
-        font-size: 2rem;
-    }
-
     .event-icon-large {
         width: 80px !important;
         height: 80px !important;
     }
 
-    .info-box {
-        padding: 20px;
-    }
-
     .full-description {
-        font-size: 1rem;
+        font-size: 1.45rem;
     }
 
     .rules-list li {
+        font-size: 1.35rem;
+    }
+
+    .side-panel {
+        position: static;
+        /* Remove sticky on mobile */
+    }
+
+    .progress-stats {
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .register-btn-large {
         font-size: 1rem;
+        padding: 15px;
+    }
+
+    .stat-value {
+        font-size: 1.3rem;
+    }
+
+    .logistics-box p {
+        font-size: 1.4rem;
+    }
+
+    .coordinators-box ul {
+        font-size: 1.35rem;
+    }
+
+    .info-box h3,
+    .section-subtitle {
+        font-size: 0.95rem;
+    }
+
+    /* Swap image → theme badge on mobile */
+    .event-icon-desktop {
+        display: none;
+    }
+
+    .event-icon-mobile {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        padding: 14px 16px;
+    }
+
+    .theme-badge-text {
+        font-size: 0.85rem;
+    }
+
+    /* Hide the inline theme label below the title on mobile (badge takes its place) */
+    .event-theme-label {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .event-details-page {
+        padding-top: 100px;
+        padding-bottom: 60px;
+    }
+
+    .event-title-main {
+        font-size: 1.6rem;
+        letter-spacing: 1px;
+    }
+
+    .event-icon-large {
+        width: 70px !important;
+        height: 70px !important;
+    }
+
+    .info-box {
+        padding: 16px;
+    }
+
+    .full-description {
+        font-size: 1.3rem;
+        line-height: 1.8;
+    }
+
+    .rules-list li {
+        font-size: 1.25rem;
+        gap: 10px;
+        margin-bottom: 14px;
+    }
+
+    .stat-label {
+        font-size: 0.7rem;
     }
 
     .stat-value {
         font-size: 1.2rem;
+    }
+
+    .logistics-box p {
+        font-size: 1.3rem;
+    }
+
+    .logistics-box strong {
+        font-size: 0.75rem;
+    }
+
+    .coordinators-box ul {
+        font-size: 1.2rem;
+    }
+
+    .coordinators-box h4 {
+        font-size: 0.9rem;
+    }
+
+    .progress-title {
+        font-size: 0.85rem;
+    }
+
+    .register-btn-large {
+        font-size: 0.85rem;
+        padding: 14px 10px;
+        letter-spacing: 0.5px;
+    }
+
+    .back-link {
+        font-size: 0.65rem;
+        margin-bottom: 20px;
+    }
+
+    .info-box h3,
+    .section-subtitle {
+        font-size: 0.85rem;
     }
 }

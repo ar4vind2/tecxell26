@@ -48,6 +48,10 @@ const registrationSchema = new mongoose.Schema({
         enum: ['Pending', 'Paid'],
         default:'Pending'
     },
+    prize:{
+        type:String,
+        default:'None'
+    },
     createdAt:{
         type:Date,
         default:Date.now

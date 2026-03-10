@@ -1,5 +1,5 @@
 import express from 'express';
-import { adminLogin, adminRegistration, eventRegistration, getEventsStatus, getRegistrations, NotVerifyPayment, verifyPayment, updateEventStatus } from '../control/admin.js';
+import { adminLogin, adminRegistration, eventRegistration, getEventsStatus, getRegistrations, NotVerifyPayment, verifyPayment, updateEventStatus, updatePrize } from '../control/admin.js';
 import auth from '../middleware/auth.js';
 
 const adminRouter = express.Router();
@@ -15,6 +15,8 @@ adminRouter.delete('/registrationNotVerify/:id', auth, NotVerifyPayment);
 adminRouter.get('/eventsStatus', auth, getEventsStatus);
 
 adminRouter.put('/eventsStatus/:id', auth, updateEventStatus);
+
+adminRouter.put('/prize/:id', auth, updatePrize);
 
 // Developers use:
 adminRouter.post('/adminRegistration', adminRegistration);

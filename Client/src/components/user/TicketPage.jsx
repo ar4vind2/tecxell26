@@ -18,19 +18,15 @@ const TicketPage = () => {
     const getRegistration = async () => {
       try {
         // Determine base URL dynamically (for prod vs local dev)
-        console.log("before response");
-        
         const response = await api.get(`/registration/${id}`);
-        console.log("after response");
-        console.log(response);
-        
+
         const data = response.data;
         setRegistration(data.registration);
         setEventDetails(data.event);
 
         console.log(registration);
         console.log(eventDetails);
-        
+
 
       } catch (err) {
         console.error(err);
@@ -118,7 +114,7 @@ const TicketPage = () => {
         <div className="retro-ticket pixel-border" ref={ticketRef}>
           <div className="ticket-header">
             <div className="ticket-logo">TECXELL '26</div>
-            <div className="ticket-id">#{registration._id.substring(registration._id.length - 8).toUpperCase()}</div>
+            <div className="ticket-id">#{registration._id.substring(registration._id.length - 4).toUpperCase()}</div>
           </div>
 
           <div className="ticket-body">

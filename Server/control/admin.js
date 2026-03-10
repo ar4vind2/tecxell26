@@ -12,7 +12,6 @@ const __dirname = path.dirname(__filename);
 export const adminLogin = async (req, res) => {
     try {
         const { password } = req.body;
-        console.log(password);
         if (!password) {
             return res.status(400).json({ error: 'Password is required' });
         }
@@ -152,9 +151,12 @@ export const verifyPayment = async (req, res) => {
             `Your Ticket is Confirmed for ${updatedRegistration.eventName}`,
             updatedRegistration.playerName,
             `<p>We are thrilled to let you know that your payment has been verified!</p>
-             <p>Access and download your digital Retro-Pass from the link below:</p>`,
-            `<div style="text-align: center;"><a href="${ticketUrl}" class="btn" style="display: inline-block; padding: 12px 28px; background-color: #0056b3; color: white; text-decoration: none; border-radius: 6px; font-weight: bold; margin-top: 25px;">Download Tickets</a></div>`
+             <p>Access and download your digital Retro-Pass from the link below:</p>
+             <p><strong>Note: The physical Ticket will only be given if you show this digital ticket, so keep it safe!</strong></p>
+             <div style="text-align: center;"><a href="${ticketUrl}" class="btn" style="display: inline-block; padding: 12px 28px; background-color: #0056b3; color: white; text-decoration: none; border-radius: 6px; font-weight: bold; margin-top: 25px;">Download Tickets</a></div>`,
+            ``
         );
+
 
         const imageAttachments = [
             { filename: 'mits-logo.png', path: path.join(__dirname, '../public/mits-logo.png'), cid: 'mits_logo' },
@@ -334,6 +336,33 @@ export const eventRegistration = async (req, res) => {
     } catch (error) {
         console.error('Event Registration error:', error);
         res.status(500).json({ error: 'Server error during event registration' });
+    }
+};
+
+export const updatePrize = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { prize } = req.body;
+
+        const validPrizes = ['1st Prize', '2nd Prize', 'None'];
+        if (!validPrizes.includes(prize)) {
+            return res.status(400).json({ error: 'Invalid prize value' });
+        }
+
+        const registration = await Registration.findByIdAndUpdate(
+            id,
+            { prize },
+            { new: true }
+        );
+
+        if (!registration) {
+            return res.status(404).json({ error: 'Registration not found' });
+        }
+
+        res.status(200).json({ msg: 'Prize updated successfully', registration });
+    } catch (error) {
+        console.error('Update prize error:', error);
+        res.status(500).json({ error: 'Server error updating prize' });
     }
 };
 
