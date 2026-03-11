@@ -77,6 +77,7 @@ export const registration = async (req, res) => {
         });
 
         const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+        const adminUrl = `${frontendUrl}/admin/dashboard`;
         const createEmailHTML = (title, name, bodyHtml, buttonHtml = '') => `
 <!DOCTYPE html>
 <html>
@@ -127,7 +128,7 @@ export const registration = async (req, res) => {
             admin?.name || 'Coordinator',
             `<p>A new registration has been submitted for <strong>${eventName}</strong>.</p>
              <p>Please verify the payment and approve it immediately. Do not delay this verification.</p>`,
-            `<div style="text-align: center;"><a href="https://tecxell-admin.com/dashboard" class="btn" style="display: inline-block; padding: 12px 28px; background-color: #0056b3; color: white; text-decoration: none; border-radius: 6px; font-weight: bold; margin-top: 25px;">Go to Admin Dashboard</a></div>`
+            `<div style="text-align: center;"><a href="${adminUrl}" class="btn" style="display: inline-block; padding: 12px 28px; background-color: #0056b3; color: white; text-decoration: none; border-radius: 6px; font-weight: bold; margin-top: 25px;">Go to Admin Dashboard</a></div>`
         );
 
         const imageAttachments = [

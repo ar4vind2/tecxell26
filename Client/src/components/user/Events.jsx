@@ -28,7 +28,7 @@ const Events = () => {
     useEffect(() => {
         const fetchStatuses = async () => {
             try {
-                const res = await api.get('/eventsStatus');
+                const res = await api.get('/publicEventsStatus');
                 const statusMap = {};
                 (res.data.events || []).forEach(e => {
                     statusMap[e.name] = e.currentSts;

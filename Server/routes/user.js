@@ -7,6 +7,6 @@ userRouter.post('/registration', registration);
 userRouter.get('/registration/:id', getRegistration);
 userRouter.get('/eFootballCount', getEFootballCount);
 userRouter.get('/miniMilitiaCount', getMiniMilitiaCount);
-userRouter.get('/eventsStatus', getPublicEventsStatus);
+userRouter.get('/publicEventsStatus', getPublicEventsStatus);
 
 export default userRouter;
