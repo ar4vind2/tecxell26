@@ -3,7 +3,7 @@ name: Deploy Tecxell26 to Production
 on:
   push:
     branches:
-      - main # Change this to 'master' if your default branch is master
+      - main 
 
 jobs:
   build-and-deploy:
@@ -13,10 +13,17 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      - name: Copy existing .env files
+        run: |
+          # Copy backend .env
+          cp /home/mediaclub-backend2/Tecxell26/Server/.env ./Server/.env
+          
+          # Copy frontend .env
+          cp /home/mediaclub-backend2/Tecxell26/Client/.env ./Client/.env
+
       - name: Deploy with Docker Compose
         run: |
-          # Rebuild the images with the latest code and start in detached mode
+          # The --build flag ensures the React app is re-compiled with the injected .env variables
           docker compose up --build -d
           
-          # Clean up old unused Docker images to save disk space on the server
           docker image prune -f
