@@ -9,7 +9,26 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors());
+// --- UPDATED CORS CONFIGURATION ---
+const allowedOrigins = [
+  'https://tecxell.mitsmediaclub.com',
+  'https://tecxell.mgmits.ac.in',
+  'http://localhost:5173' // Keep for local development
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
+  credentials: true
+}));
+
 app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
@@ -27,10 +46,10 @@ app.use('/api', userRouter, admitRouter);
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err);
-  res.status(500).json({ error: err });
+  res.status(500).json({ error: err.message || 'Internal Server Error' });
 });
 
-app.listen(PORT, () => {
-// app.listen(PORT, '0.0.0.0', () => {
+
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Server listening on port ${PORT}`);
 });
