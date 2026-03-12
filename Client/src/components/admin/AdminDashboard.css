@@ -206,6 +206,10 @@
     color: var(--arcade-green);
 }
 
+.text-arcade-red {
+    color: var(--arcade-red);
+}
+
 .font-bold {
     font-weight: bold;
 }

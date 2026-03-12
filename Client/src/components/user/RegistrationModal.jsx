@@ -98,10 +98,13 @@ const RegistrationModal = ({ eventId, eventTitle, eventColor, isTeamEvent, onClo
             return;
         }
 
-        // College validation (No MITS variations unless MCA)
-        if (/mits|muthoot/i.test(collegeLower) && !/mca/i.test(courseLower)) {
-            setErrorMsg('ACCESS DENIED: Participants from MITS are not permitted (except MCA).');
-            return;
+        // College validation (MITS allowed only for MCA in specific events)
+        const isAllowedEvent = eventId === 'e-football' || eventId === 'mini-militia';
+        if (/mits|muthoot/i.test(collegeLower)) {
+            if (!/mca/i.test(courseLower) || !isAllowedEvent) {
+                setErrorMsg('ACCESS DENIED: MITS participants cannot register.');
+                return;
+            }
         }
 
         setErrorMsg('');

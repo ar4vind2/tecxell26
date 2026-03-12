@@ -16,11 +16,14 @@ export const registration = async (req, res) => {
             return res.status(400).json({ error: 'All fields are required' });
         }
 
-        const isMitsOrMuthoot = college.toLowerCase().includes('mits') || college.toLowerCase().includes('muthoot');
-        const isMca = branch.toLowerCase().trim() === 'mca' || branch.toLowerCase().includes('mca');
+        const isMitsOrMuthoot = (college || '').toLowerCase().includes('mits') || (college || '').toLowerCase().includes('muthoot');
+        const isMca = (branch || '').toLowerCase().trim() === 'mca' || (branch || '').toLowerCase().includes('mca');
+        const isAllowedEvent = eventName === 'E-football' || eventName === 'Mini Miltia' || eventName === 'Mini Militia';
         
-        if (isMitsOrMuthoot && !isMca) {
-            return res.status(400).json({ error: 'Registration not allowed for this college' });
+        if (isMitsOrMuthoot) {
+            if (!isMca || !isAllowedEvent) {
+                return res.status(400).json({ error: 'Registration not allowed for this college/event combination' });
+            }
         }
 
         if (eventName === 'E-football') {

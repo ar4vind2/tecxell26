@@ -6,6 +6,10 @@ const eventSchema = new mongoose.Schema({
         required: true,
         enum: ['Vibe Coding', 'Reel Making', 'Poster Making', 'Computer Quiz', 'Mini Miltia', 'Treasure Hunt', 'E-football'],
     },
+    regFee:{
+      type: String,
+      required: true
+    },
     loc:{
       type:String,
       required:true

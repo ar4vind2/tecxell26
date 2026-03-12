@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import api from '../../utils/axios';
+import { eventsData } from '../../data/eventsData';
 
 const AdminCommsLog = () => {
     const tableContainerRef = useRef(null);
@@ -74,11 +75,22 @@ const AdminCommsLog = () => {
             return;
         }
 
-        const headers = ["Sl No", "Ticket ID", "Event Name", "Player Names", "Team Name", "Phone", "Email", "College", "Branch", "Transaction ID", "Squad Size", "Fee Status", "Verified Status", "Prize", "Date Registered"];
+        const headers = ["Sl No", "Ticket ID", "Event Name", "Player Names", "Team Name", "Phone", "Email", "College", "Branch", "Transaction ID", "Squad Size", "Fee Amount", "Fee Status", "Verified Status", "Prize", "Date Registered"];
 
         const csvRows = [headers.join(',')];
 
         filteredRegistrations.forEach((reg, idx) => {
+            const getExactEventFeeNumeric = (eventName) => {
+                const normalized = (eventName || '').toLowerCase();
+                const map = { 'mini miltia': 'mini-militia' };
+                const idToSearch = map[normalized] || normalized.replace(/\s+/g, '-');
+                const eventInfo = eventsData.find(e => e.id === idToSearch || e.title.toLowerCase() === normalized);
+                if (!eventInfo) return 'N/A';
+                // Extract just the numerical value from "Rs 50 Per Head" etc.
+                const match = eventInfo.fee.match(/\d+/);
+                return match ? match[0] : 'N/A';
+            };
+            const feeAmount = getExactEventFeeNumeric(reg.eventName);
             const row = [
                 idx + 1,
                 `"#${(reg._id || '').slice(-4).toUpperCase()}"`,
@@ -91,6 +103,7 @@ const AdminCommsLog = () => {
                 `"${reg.branch || ''}"`,
                 `"${reg.transactionId || ''}"`,
                 reg.squadSize || (Array.isArray(reg.playerName) ? reg.playerName.length : 1),
+                `"${feeAmount}"`,
                 `"${reg.feeSts || ''}"`,
                 `"${reg.verified || ''}"`,
                 `"${reg.prize || 'None'}"`,
@@ -208,7 +221,7 @@ const AdminCommsLog = () => {
                     </thead>
                     <tbody>
                         {filteredRegistrations.map((reg, idx) => {
-                            const isRecent = reg.createdAt && (new Date() - new Date(reg.createdAt) <= 12 * 60 * 60 * 1000);
+                            const isRecent = reg.verified === 'Pending' && reg.createdAt && (new Date() - new Date(reg.createdAt) <= 12 * 60 * 60 * 1000);
                             return (
                                 <tr key={reg._id} style={{ backgroundColor: isRecent ? 'rgba(173, 216, 230, 0.2)' : 'transparent' }}>
                                     <td>#{idx + 1}</td>
@@ -273,8 +286,9 @@ const AdminCommsLog = () => {
                             <div><strong className="text-arcade-yellow">DATE:</strong><br /> {new Date(selectedReg.createdAt).toLocaleDateString()}</div>
                             <div><strong className="text-arcade-yellow">TIME:</strong><br /> {new Date(selectedReg.createdAt).toLocaleTimeString()}</div>
 
-                            <div><strong className="text-arcade-yellow">PHONE NO:</strong><br /> {selectedReg.phone}</div>
-                            <div>
+                            <div><strong className="text-arcade-yellow">PHONE NO:</strong><br /> <a href={`tel:${selectedReg.phone}`} className="text-arcade-blue hover-blink" style={{ textDecoration: 'underline' }}>{selectedReg.phone}</a></div>
+                            <div><strong className="text-arcade-yellow">COLLEGE:</strong><br /> {selectedReg.college}</div>
+                            <div style={{ gridColumn: 'span 2' }}>
                                 <strong className="text-arcade-yellow">TRANSACTION ID:</strong><br />
                                 <span className="blinking-border">{selectedReg.transactionId}</span>
                             </div>

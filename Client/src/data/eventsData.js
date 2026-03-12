@@ -90,15 +90,17 @@ export const eventsData = [
         qrCode: '/qrcodes/Computer Quiz.png',
         fullDescription: 'The Computer Quiz is a technical knowledge competition designed to test participants’ understanding of computer science, programming concepts, information technology, and general technology awareness. The event will include multiple quiz rounds that evaluate participants’ technical knowledge, logical thinking, and quick response ability. Teams will compete against each other to answer questions related to computer fundamentals, programming, networking, operating systems, and modern technology.',
         rules: [
+            'Participants must report at the venue by 1:20 pm.',
             'Teams must consist of 2 members.',
-            'Participants must report at the venue S4 MCA Classroom before 1:30 PM.',
-            'Certain rounds will be facilitated through the Kahoot platform. Each team is responsible for ensuring its own internet connectivity.',
-            'The organizing committee will not be held accountable for any network-related issues.',
-            'During these rounds, each team is permitted to use only one mobile phone; the use of any other smart devices is strictly prohibited.',
+            'The quiz will consist of 4 rounds.',
+            'Teams will be eliminated based on their scores at the end of each round.',
             'Participants must follow the instructions given by the quiz master and coordinators.',
             'Answers must be given within the allotted time.',
             'Participants must maintain discipline throughout the event.',
-            'The decision of the quiz master and event coordinators will be final.'
+            'The decision of the quiz master and event coordinators will be final.',
+            'Final round will be facilitated through the Kahoot platform. Each team is responsible for ensuring its own internet connectivity. The organizing committee will not be held accountable for any network-related issues.',
+            'During the final round, each team is permitted to use only one mobile phone, the use of any other smart devices is strictly prohibited.',
+            'Any form of cheating, use of unauthorized devices, external assistance, or misconduct during the quiz will result in immediate disqualification.'
         ],
         coordinators: ['Muhammed Naeem T N - 9747409785'],
         judging: [
