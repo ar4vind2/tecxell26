@@ -11,16 +11,16 @@ export const eventsData = [
         fullDescription: 'An AI-assisted hackathon! Build a full-stack web app from an on-the-spot problem statement. You can use Conversational AI (ChatGPT/Gemini) for guidance, but direct code-editing plugins (like Cursor/Copilot) are prohibited. Test your prompt-engineering and engineering flow.',
         rules: [
             'Teams must consist of 1-2 members.',
-            'Laptop is needed.',
+            'Laptop is required.',
             'No external help is permitted during the build phase.',
-            'Problem statement will be provided on spot along with the description of the minimum functionalities.',
+            'Problem statement will be provided on spot.',
             'Task: Build a full-stack web application (Frontend + Backend) based on a selected topic.',
             'Conversational Al tools (e.g., ChatGPT, Gemini etc.) may be used for reference and guidance only. However, Al tools that directly generate or edit code inside the development environment (such as Cursor Al, Lovable, Copilot, etc.) are not allowed.',
             'Prohibited to Use pre-built GitHub projects.',
             'Prohibited to Use code written before the event.',
             'Prohibited to copy full applications directly from tutorials.',
             'Prohibited to Share code between competing teams.',
-            'Elimination Rounds if Any: No.'
+            'Violation of rules, plagiarism, or unethical conduct may result in immediate disqualification.'
         ],
         coordinators: ['Vijeesh V - 9061316079'],
         judging: [
@@ -31,8 +31,8 @@ export const eventsData = [
             'Clarity and quality of the 5-minute demo.',
             'Violation of rules, plagiarism, or unethical conduct may result in immediate disqualification'
         ],
-        prize: ['1st Prize - ₹2,500', '2nd Prize - ₹1,500'],
-        fee: '₹100 Per Person',
+        prize: ['1st Prize - Rs 2,500', '2nd Prize - Rs 1,500'],
+        fee: 'Rs 100 Per Person',
         date: '18 MARCH',
         time: '12:00 PM',
         venue: 'Vinton Cerf Lab',
@@ -61,14 +61,16 @@ export const eventsData = [
             'The decision of the organisers/judges will be final.',
             'All team members must remain together during the event unless instructed otherwise by the organisers.',
             'Seeking assistance from individuals outside the team is strictly prohibited.',
-            'Elimination Rounds: Yes'
+            'ELIMINATION ROUNDS:',
+            'Failure to complete any round within the given time limit or inability to solve the required clue to proceed to the next round.',
+            'Violation of the event rules, including the use of mobile phones or the internet to search for clues without permission from the organisers.'
         ],
         coordinators: ['Fathima Nazrin - 9645507376'],
         judging: [
             'The team that earns the highest score within the given time limit by successfully completing the three rounds and solving the clues will be declared the winner.'
         ],
-        prize: ['1st Prize - ₹4,000'],
-        fee: '₹200 Per Team (Team of 4)',
+        prize: ['1st Prize - Rs 4,000'],
+        fee: 'Rs 200 Per Team (Team of 4)',
         date: '18 MARCH',
         time: '09:30 AM',
         venue: 'Room No: M016',
@@ -105,8 +107,8 @@ export const eventsData = [
             'Disqualification: Any form of cheating, plagiarism, or unfair practices.',
             'Disqualification: Misconduct or disturbance during the event.'
         ],
-        prize: ['1st Prize - ₹2000', '2nd Prize - ₹1000'],
-        fee: '₹100 Per Team',
+        prize: ['1st Prize - Rs 2000', '2nd Prize - Rs 1000'],
+        fee: 'Rs 100 Per Team',
         date: '18 MARCH',
         time: '01:30 PM',
         venue: 'Room No: M015',
@@ -124,24 +126,24 @@ export const eventsData = [
         qrCode: '/qrcodes/Poster Making.png',
         fullDescription: 'The Poster Making Competition is designed to test the creative and technical skills of students in the realm of digital design. Participants will be challenged to translate a theme into a compelling visual narrative using modern design tools.',
         rules: [
-            'Participation: This is an individual competition.',
-            'Equipment: Each participant must bring their own laptop.',
-            'The Task: Participants must create a digital poster based on a theme announced at the start of the event.',
-            'Software: Posters must be designed using digital tools (e.g., Adobe Photoshop, Canva, Illustrator, Figma, etc.).',
-            'Authenticity: Only original work is accepted. Plagiarism or copying existing designs is strictly prohibited.',
-            'Conduct: No external help or collaboration is permitted during the competition.',
-            'Disqualification: Violation of rules, late submissions, or the use of offensive/inappropriate content will lead to immediate disqualification.'
+            'This is an individual competition.',
+            'Each participant must bring their own laptop.',
+            'Participants must create a digital poster using AI tools or AI-assisted design techniques based on a theme announced at the start of the event.',
+            'Posters must be designed using AI-powered tools (e.g., Midjourney, DALL-E, Stable Diffusion, Adobe Firefly, Canva AI, Leonardo.ai, etc.) or traditional tools enhanced with AI assistance.',
+            'Original AI-generated content is required. Participants must disclose the AI tools and prompts used. Direct copying of existing AI artwork is prohibited.',
+            'No external help or collaboration is permitted during the competition.',
+            'Violation of rules, late submissions, or the use of offensive/inappropriate content will lead to immediate disqualification.'
         ],
         coordinators: ['Mary Ashna K.R - 9995688036'],
         judging: [
-            'Creativity & Originality: Uniqueness of the concept.',
-            'Relevance: How well the design aligns with the announced theme.',
-            'Design Quality: Visual appeal, layout, and use of color/typography.',
-            'Communication: Clarity of the message being conveyed.',
-            'Professionalism: Overall presentation and finish.'
+            'Creativity & Originality: Uniqueness of AI prompts and creative direction.',
+            'Relevance: How well the AI-generated design aligns with the announced theme.',
+            'Design Quality: Visual appeal, layout, and effective use of AI-generated elements.',
+            'Communication: Clarity of the message conveyed through AI-assisted design.',
+            'AI Integration: Effective and innovative use of AI tools in the creative process.'
         ],
-        prize: ['1st Prize - ₹2000', '2nd Prize - ₹1000'],
-        fee: '₹50 Per Head',
+        prize: ['1st Prize - Rs 2000', '2nd Prize - Rs 1000'],
+        fee: 'Rs 50 Per Head',
         date: '18 MARCH',
         time: '09:30 AM',
         venue: 'Vinton Cerf Lab'
@@ -180,8 +182,8 @@ export const eventsData = [
             'Relevance to theme',
             'Overall impact'
         ],
-        prize: ['1st Prize - ₹2000', '2nd Prize - ₹1000'],
-        fee: '₹50 Per Team',
+        prize: ['1st Prize - Rs 2000', '2nd Prize - Rs 1000'],
+        fee: 'Rs 50 Per Team',
         date: '18 MARCH',
         time: '09:30 AM',
         venue: 'Room No: M014',
@@ -214,12 +216,12 @@ export const eventsData = [
             'Any type of misconduct will lead to disqualification',
             'No refund',
             'Decision of jury panel shall be final',
-            'Elimination Rounds if Any: No'
+            'Elimination rounds if any: No'
         ],
         coordinators: ['Favadh Hamza - 7902820178'],
         judging: [],
-        prize: ['1st Prize - ₹1500', '2nd Prize - ₹500'],
-        fee: '₹50 Per Head',
+        prize: ['1st Prize - Rs 1500', '2nd Prize - Rs 500'],
+        fee: 'Rs 50 Per Head',
         date: '18 MARCH',
         time: '10:30 AM',
         venue: 'Room No: M015',
@@ -255,7 +257,7 @@ export const eventsData = [
             'C. FAIR PLAY & CONDUCT',
             'Cheating, hacking, modding, exploiting glitches, or any unfair advantage is strictly prohibited.',
             'Intentional team-ups in free-for-all matches are not allowed.',
-            'Elimination Rounds: Yes'
+            'Elimination rounds if any: Yes'
         ],
         coordinators: ['Sharon K Jayamon - 9544828035', 'Anandhakrishnan K - 8714597642'],
         judging: [
@@ -263,8 +265,8 @@ export const eventsData = [
             'If points are same, Kill-to-death ratio (K/D Ratio) will be considered',
             'In case of a tie, organizers may conduct a tiebreaker round'
         ],
-        prize: ['1st Prize - ₹2000', '2nd Prize - ₹1000'],
-        fee: '₹50 Per Head',
+        prize: ['1st Prize - Rs 2000', '2nd Prize - Rs 1000'],
+        fee: 'Rs 50 Per Head',
         date: '18 MARCH',
         time: '09:30 AM',
         venue: 'Room No: M014'

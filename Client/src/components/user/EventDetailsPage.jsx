@@ -58,6 +58,23 @@ const EventDetailsPage = () => {
                             ▶ {event.theme}
                         </span>
                     )}
+
+                    <div 
+                        className="warning-notice pixel-border" 
+                        style={{ 
+                            marginTop: '15px', 
+                            padding: '10px', 
+                            backgroundColor: 'rgba(255, 0, 0, 0.2)', 
+                            border: '1px solid #ff4444',
+                            borderRadius: '4px',
+                            color: '#ffcccc',
+                            fontSize: '1.2rem',
+                            maxWidth: '600px',
+                            animation: 'pulse 2s infinite'
+                        }}
+                    >
+                        <strong>⚠️ WARNING:</strong> Avoid registering for events with same time. If registered by mistake, contact the coordinators!
+                    </div>
                 </div>
                 {/* Desktop: show image */}
                 <img
