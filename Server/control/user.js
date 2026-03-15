@@ -252,3 +252,16 @@ export const getPublicEventsStatus = async (req, res) => {
         res.status(500).json({ error: 'Server error fetching events status' });
     }
 };
+
+export const getWinners = async (req, res) => {
+    try {
+        const winners = await Registration.find(
+            { prize: { $in: ['1st Prize', '2nd Prize'] } },
+            'eventName playerName teamName college prize'
+        );
+        res.status(200).json({ winners });
+    } catch (error) {
+        console.error('Get winners error:', error);
+        res.status(500).json({ error: 'Server error fetching winners' });
+    }
+};
