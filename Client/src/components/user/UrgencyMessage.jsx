@@ -1,72 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../utils/axios';
 
-const UrgencyMessage = () => {
-    const [counts, setCounts] = useState({
-        efootball: 0,
-        minimilitia: 0,
-        treasurehunt: 0
-    });
-    const [loading, setLoading] = useState(true);
+const UrgencyMessage = ({ eventId }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
-
-    const LIMITS = {
-        efootball: 32,
-        minimilitia: 40,
-        treasurehunt: 10
-    };
-
-    const OFFSETS = {
-        efootball: 14,
-        minimilitia: 20,
-        treasurehunt: 5
-    };
-
-    const EVENT_NAMES = {
-        efootball: 'E-FOOTBALL',
-        minimilitia: 'MINI MILITIA',
-        treasurehunt: 'TREASURE HUNT'
-    };
-
     const [isVisible, setIsVisible] = useState(true);
 
-    useEffect(() => {
-        const fetchCounts = async () => {
-            try {
-                const [efootball, minimilitia, treasurehunt] = await Promise.all([
-                    api.get('/eFootballCount'),
-                    api.get('/miniMilitiaCount'),
-                    api.get('/treasureHuntCount')
-                ]);
+    const SPOT_DATA = {
+        'vibe-coding': { time: '11:30 AM', venue: 'Vinton Cerf Lab' },
+        'treasure-hunt': { time: '09:30 AM', venue: 'Room No: M016' },
+        'computer-quiz': { time: '01:00 PM', venue: 'Room No: M015' },
+        'poster-making': { time: '09:30 AM', venue: 'Vinton Cerf Lab' },
+        'reel-making': { time: '09:30 AM', venue: 'Room No: M014' },
+        'e-football': { time: '10:00 AM', venue: 'Room No: M015' },
+        'mini-militia': { time: '09:30 AM', venue: 'Room No: M014' }
+    };
 
-                setCounts({
-                    efootball: efootball.data.count,
-                    minimilitia: minimilitia.data.count,
-                    treasurehunt: treasurehunt.data.count
-                });
-            } catch (error) {
-                console.error('Error fetching urgency counts:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
+    const EVENT_DISPLAY_NAMES = {
+        'vibe-coding': 'VIBE CODING',
+        'treasure-hunt': 'TREASURE HUNT',
+        'computer-quiz': 'COMPUTER QUIZ',
+        'poster-making': 'POSTER MAKING',
+        'reel-making': 'REEL MAKING',
+        'e-football': 'E-FOOTBALL',
+        'mini-militia': 'MINI MILITIA'
+    };
 
-        fetchCounts();
-        
-        // Refresh counts every 30 seconds
-        const interval = setInterval(fetchCounts, 30000);
-        return () => clearInterval(interval);
-    }, []);
+    const eventKeys = Object.keys(SPOT_DATA);
 
     useEffect(() => {
-        if (loading) return;
+        if (eventId) return; // Don't cycle if we're on a specific event page
 
         const timer = setInterval(() => {
-            setCurrentIndex((prev) => (prev + 1) % 3);
+            setCurrentIndex((prev) => (prev + 1) % eventKeys.length);
         }, 5000);
 
         return () => clearInterval(timer);
-    }, [loading]);
+    }, [eventId, eventKeys.length]);
 
     const handleClose = () => {
         setIsVisible(false);
@@ -75,12 +44,13 @@ const UrgencyMessage = () => {
         }, 10000);
     };
 
-    if (loading || !isVisible) return null;
+    if (!isVisible) return null;
 
-    const eventKeys = Object.keys(LIMITS);
-    const currentKey = eventKeys[currentIndex];
-    const displayBooked = counts[currentKey] + OFFSETS[currentKey];
-    const remaining = Math.max(0, LIMITS[currentKey] - displayBooked);
+    // Determine which event to show
+    const currentEventId = eventId || eventKeys[currentIndex];
+    const data = SPOT_DATA[currentEventId];
+
+    if (!data) return null;
 
     return (
         <div className="urgency-floating-badge">
@@ -115,33 +85,42 @@ const UrgencyMessage = () => {
                 }}></div>
 
                 <div className="blink-text" style={{ 
-                    color: 'var(--arcade-red)', 
-                    fontSize: '0.8rem',
-                    textShadow: '2px 2px 0px #000, 0 0 10px rgba(255,0,0,0.5)',
+                    color: 'var(--arcade-yellow)', 
+                    fontSize: '0.75rem',
+                    textShadow: '2px 2px 0px #000, 0 0 10px rgba(255,215,0,0.5)',
                     letterSpacing: '1px',
                     paddingRight: '20px'
                 }}>
-                    ALERT: LIMITED SEATS
+                    SPOT REGISTRATION OPEN!
                 </div>
                 
                 <div style={{ 
                     borderLeft: '4px solid var(--arcade-blue)', 
-                    paddingLeft: '10px',
+                    paddingLeft: '12px',
                     background: 'rgba(0, 240, 255, 0.05)',
-                    margin: '2px 0'
+                    margin: '8px 0',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '5px'
                 }}>
-                    <div style={{ fontSize: '0.7rem' }}>
-                        {EVENT_NAMES[currentKey]}: <span style={{ color: 'var(--arcade-green)' }}>{remaining} LEFT</span>
+                    <div style={{ fontSize: '0.8rem', color: '#fff', fontWeight: 'bold' }}>
+                        {EVENT_DISPLAY_NAMES[currentEventId]}
+                    </div>
+                    <div style={{ fontSize: '0.7rem', color: 'var(--arcade-blue)' }}>
+                        TIME: <span style={{ color: '#fff' }}>{data.time}</span>
+                    </div>
+                    <div style={{ fontSize: '0.7rem', color: 'var(--arcade-green)' }}>
+                        VENUE: <span style={{ color: '#fff' }}>{data.venue}</span>
                     </div>
                 </div>
 
                 <div className="blink-text-subtle" style={{ 
-                    fontSize: '0.55rem', 
-                    color: 'var(--arcade-blue)',
+                    fontSize: '0.5rem', 
+                    color: 'var(--arcade-pink)',
                     textAlign: 'center',
                     marginTop: '4px'
                 }}>
-                    &gt;&gt; REGISTER NOW &lt;&lt;
+                    &gt;&gt; REGISTER FOR SPOT &lt;&lt;
                 </div>
             </div>
         </div>

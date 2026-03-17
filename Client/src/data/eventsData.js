@@ -74,7 +74,8 @@ export const eventsData = [
         date: '18 MARCH',
         time: '09:30 AM',
         venue: 'Room No: M016',
-        bookedSeats: 10,
+        maxSeats: 10,
+        dbName: 'Treasure Hunt',
         isTeamEvent: true
     },
 
@@ -229,7 +230,8 @@ export const eventsData = [
         date: '18 MARCH',
         time: '10:30 AM',
         venue: 'Room No: M015',
-        bookedSeats: 16
+        maxSeats: 32,
+        dbName: 'E-football'
     },
     {
         id: 'mini-militia',
@@ -273,6 +275,8 @@ export const eventsData = [
         fee: 'Rs 50 Per Head',
         date: '18 MARCH',
         time: '09:30 AM',
-        venue: 'Room No: M014'
+        venue: 'Room No: M014',
+        maxSeats: 40,
+        dbName: 'Mini Miltia'
     }
 ];

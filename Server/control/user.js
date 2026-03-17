@@ -213,33 +213,20 @@ export const getRegistration = async (req, res) => {
     }
 };
 
-export const getEFootballCount = async (req, res) => {
+export const getEventCount = async (req, res) => {
     try {
-        const count = await Registration.countDocuments({ eventName: 'E-football' });
+        const { eventName } = req.query;
+        if (!eventName) {
+            return res.status(400).json({ error: 'Event name is required' });
+        }
+        const count = await Registration.countDocuments({ 
+            eventName,
+            verified: { $in: ['Pending', 'Verified'] } 
+        });
         res.status(200).json({ count });
     } catch (error) {
-        console.error('E-Football count error:', error);
-        res.status(500).json({ error: 'Server error fetching E-Football count' });
-    }
-};
-
-export const getMiniMilitiaCount = async (req, res) => {
-    try {
-        const count = await Registration.countDocuments({ eventName: 'Mini Miltia' });
-        res.status(200).json({ count });
-    } catch (error) {
-        console.error('Mini Militia count error:', error);
-        res.status(500).json({ error: 'Server error fetching Mini Militia count' });
-    }
-};
-
-export const getTreasureHuntCount = async (req, res) => {
-    try {
-        const count = await Registration.countDocuments({ eventName: 'Treasure Hunt' });
-        res.status(200).json({ count });
-    } catch (error) {
-        console.error('Treasure Hunt count error:', error);
-        res.status(500).json({ error: 'Server error fetching Treasure Hunt count' });
+        console.error(`Error fetching count for ${req.query.eventName}:`, error);
+        res.status(500).json({ error: 'Server error fetching event count' });
     }
 };
 

@@ -13,27 +13,15 @@ const EventDetailsPage = () => {
 
     // State to control Modal visibility
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [eFootballSeats, setEFootballSeats] = useState(0);
-    const [miniMilitiaSeats, setMiniMilitiaSeats] = useState(0);
-    const [treasureHuntSeats, setTreasureHuntSeats] = useState(0);
+    const [regCount, setRegCount] = useState(0);
 
     useEffect(() => {
-        if (event?.id === 'e-football') {
-            api.get('/eFootballCount')
-                .then(res => setEFootballSeats(res.data.count))
-                .catch(() => setEFootballSeats(0));
+        if (event?.dbName) {
+            api.get(`/eventCount?eventName=${encodeURIComponent(event.dbName)}`)
+                .then(res => setRegCount(res.data.count))
+                .catch(() => setRegCount(0));
         }
-        if (event?.id === 'mini-militia') {
-            api.get('/miniMilitiaCount')
-                .then(res => setMiniMilitiaSeats(res.data.count))
-                .catch(() => setMiniMilitiaSeats(0));
-        }
-        if (event?.id === 'treasure-hunt') {
-            api.get('/treasureHuntCount')
-                .then(res => setTreasureHuntSeats(res.data.count))
-                .catch(() => setTreasureHuntSeats(0));
-        }
-    }, [event?.id]);
+    }, [event?.dbName]);
 
     if (!event) {
         return (
@@ -47,7 +35,7 @@ const EventDetailsPage = () => {
 
     return (
         <div className="event-details-page container">
-            <UrgencyMessage />
+            <UrgencyMessage eventId={event.id} />
             <Link to="/" className="back-link">
                 &lt; BACK TO STAGES
             </Link>
@@ -168,47 +156,19 @@ const EventDetailsPage = () => {
                         </ul>
                     </div>
 
-                    {event.id === 'e-football' && (
-                        <div className="progress-box pixel-border card-yellow">
-                            <h4 className="progress-title">SEAT AVAILABILITY</h4>
+                    {event.maxSeats && (
+                        <div className={`progress-box pixel-border card-${event.color}`}>
+                            <h4 className="progress-title">
+                                {event.id === 'treasure-hunt' ? 'TEAM AVAILABILITY' : 'SEAT AVAILABILITY'}
+                            </h4>
                             <div className="progress-stats">
-                                <span className="seats-remaining blink-text text-arcade-yellow">
-                                    {(eFootballSeats + 14) >= 32 ? 'LOBBY FULL' : `${32 - (eFootballSeats + 14)} SEATS REMAINING`}
+                                <span className={`seats-remaining blink-text text-arcade-${event.color}`}>
+                                    {regCount >= event.maxSeats ? 'LOBBY FULL' : `${event.maxSeats - regCount} ${event.id === 'treasure-hunt' ? 'TEAMS' : 'SEATS'} REMAINING`}
                                 </span>
-                                <span className="seats-total">{eFootballSeats + 14} / 32 BOOKED</span>
+                                <span className="seats-total">{regCount} / {event.maxSeats} BOOKED</span>
                             </div>
                             <div className="progress-bar-container">
-                                <div className="progress-bar-fill" style={{ width: `${Math.min(100, ((eFootballSeats + 14) / 32) * 100)}%` }}></div>
-                            </div>
-                        </div>
-                    )}
-
-                    {event.id === 'mini-militia' && (
-                        <div className="progress-box pixel-border card-pink">
-                            <h4 className="progress-title">SEAT AVAILABILITY</h4>
-                            <div className="progress-stats">
-                                <span className="seats-remaining blink-text text-arcade-pink">
-                                    {(miniMilitiaSeats + 20) >= 40 ? 'LOBBY FULL' : `${40 - (miniMilitiaSeats + 20)} SEATS REMAINING`}
-                                </span>
-                                <span className="seats-total">{miniMilitiaSeats + 20} / 40 BOOKED</span>
-                            </div>
-                            <div className="progress-bar-container">
-                                <div className="progress-bar-fill" style={{ width: `${Math.min(100, ((miniMilitiaSeats + 20) / 40) * 100)}%` }}></div>
-                            </div>
-                        </div>
-                    )}
-
-                    {event.id === 'treasure-hunt' && (
-                        <div className="progress-box pixel-border card-yellow">
-                            <h4 className="progress-title">TEAM AVAILABILITY</h4>
-                            <div className="progress-stats">
-                                <span className="seats-remaining blink-text text-arcade-yellow">
-                                    {(treasureHuntSeats + 5) >= 10 ? 'LOBBY FULL' : `${10 - (treasureHuntSeats + 5)} TEAMS REMAINING`}
-                                </span>
-                                <span className="seats-total">{treasureHuntSeats + 5} / 10 BOOKED</span>
-                            </div>
-                            <div className="progress-bar-container">
-                                <div className="progress-bar-fill" style={{ width: `${Math.min(100, ((treasureHuntSeats + 5) / 10) * 100)}%` }}></div>
+                                <div className="progress-bar-fill" style={{ width: `${Math.min(100, (regCount / event.maxSeats) * 100)}%` }}></div>
                             </div>
                         </div>
                     )}
@@ -216,13 +176,13 @@ const EventDetailsPage = () => {
                     <button
                         className={`register-btn-large btn-style-${event.color} blink-text-subtle`}
                         onClick={() => setIsModalOpen(true)}
-                        disabled={(event.id === 'e-football' && (eFootballSeats + 14) >= 32) || (event.id === 'mini-militia' && (miniMilitiaSeats + 20) >= 40) || (event.id === 'treasure-hunt' && (treasureHuntSeats + 5) >= 10)}
+                        disabled={event.maxSeats && regCount >= event.maxSeats}
                         style={{
-                            opacity: (event.id === 'e-football' && (eFootballSeats + 14) >= 32) || (event.id === 'mini-militia' && (miniMilitiaSeats + 20) >= 40) || (event.id === 'treasure-hunt' && (treasureHuntSeats + 5) >= 10) ? 0.5 : 1,
-                            cursor: (event.id === 'e-football' && (eFootballSeats + 14) >= 32) || (event.id === 'mini-militia' && (miniMilitiaSeats + 20) >= 40) || (event.id === 'treasure-hunt' && (treasureHuntSeats + 5) >= 10) ? 'not-allowed' : 'pointer'
+                            opacity: (event.maxSeats && regCount >= event.maxSeats) ? 0.5 : 1,
+                            cursor: (event.maxSeats && regCount >= event.maxSeats) ? 'not-allowed' : 'pointer'
                         }}
                     >
-                        {(event.id === 'e-football' && (eFootballSeats + 14) >= 32) || (event.id === 'mini-militia' && (miniMilitiaSeats + 20) >= 40) || (event.id === 'treasure-hunt' && (treasureHuntSeats + 5) >= 10) ? 'LOBBY FULL' : 'INITIATE REGISTRATION'}
+                        {event.maxSeats && regCount >= event.maxSeats ? 'LOBBY FULL' : 'INITIATE REGISTRATION'}
                     </button>
                 </div>
             </div>
